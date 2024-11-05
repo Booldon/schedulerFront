@@ -12,13 +12,15 @@ const http = axios.create({
 http.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("error", error);
     // async 키워드 추가
     if (
       error.response &&
       error.response.status === 401 &&
-      error.response.data.message === "JWT token is expired"
+      error.response.data === "JWT token is expired"
     ) {
       try {
+        console.log(error.response);
         // 토큰 갱신을 위한 /refresh 경로로 GET 요청
         await axios.post(process.env.REACT_APP_API_URL + "/auth/refresh", {
           withCredentials: true,
