@@ -1,11 +1,11 @@
-/* TopBar.css */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 3px 20px;
   background-color: #2f3c4a;
   color: white;
+  margin-bottom: 16px;
 }
 
 .login-button {
@@ -21,4 +21,19 @@
 
 .login-button:hover {
   background-color: #357ab8;
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: #c93a4a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.logout-button:hover {
+  background-color: #9d2f2f;
 }

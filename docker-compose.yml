@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  nginx-proxy:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80" # 외부 80번 포트를 Nginx 프록시 80번 포트에 매핑
+    networks:
+      - app-network
+    depends_on:
+      - auth-server
+      - api-server
+      - react-nginx
+
+  react-nginx:
+    image: react-nginx
+    container_name: react-nginx
+    expose:
+      - "80"
+    networks:
+      - app-network
+
+  auth-server:
+    image: auth-server
+    container_name: auth-server
+    expose:
+      - "8080"
+    networks:
+      - app-network
+
+  api-server:
+    image: api-server
+    container_name: api-server
+    expose:
+      - "8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
