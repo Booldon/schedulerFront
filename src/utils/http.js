@@ -12,7 +12,6 @@ const http = axios.create({
 http.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log("error", error);
     // async 키워드 추가
     if (
       error.response &&

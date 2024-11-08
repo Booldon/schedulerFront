@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
   background-color: #f0f2f5;
 }
 
-.login-box {
+.signup-box {
   width: 100%;
   max-width: 400px;
   padding: 20px;
@@ -18,27 +18,34 @@
 
 .top-bar {
   text-align: center;
-  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
   background-color: #2f3c4a;
   color: #ffffff;
 }
 
-.login-form {
+.top-bar-text {
+  color: #ffffff;
+  margin-left: 10px;
+}
+
+.signup-form {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.login-form label {
+.signup-form label {
   text-align: left;
   font-size: 14px;
   display: block;
-  margin-bottom: 5px;
+  text-align: left; /* 좌측 정렬 */
 }
 
-.login-form input {
+.signup-form input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -47,23 +54,19 @@
   transition: border-color 0.3s;
 }
 
-.login-form input:focus {
+.signup-form input:focus {
   border-color: #4caf50;
   outline: none;
 }
 
-.login-button {
-  padding: 12px;
-  font-size: 16px;
-  background-color: #5549bb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+.signup-form label {
+  text-align: left;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 5px;
 }
 
-.signUp-button {
+.signup-form button {
   padding: 12px;
   font-size: 16px;
   background-color: #4caf50;
@@ -74,21 +77,12 @@
   transition: background-color 0.3s;
 }
 
-.signUp-button:hover {
+.signup-form button:hover {
   background-color: #45a049;
 }
 
-.signUp-button:disabled {
+.signup-form button:disabled {
   background-color: #9ccc65;
-  cursor: not-allowed;
-}
-
-.login-button:hover {
-  background-color: #342b82;
-}
-
-.login-button:disabled {
-  background-color: #7a6fdd;
   cursor: not-allowed;
 }
 

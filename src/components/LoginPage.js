@@ -1,75 +1,91 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../css/LoginPage.css";
-import GoogleOAuthButton from "./oauthButton/GoogleOAuthButton";
-import NaverOAuthButton from "./oauthButton/NaverOAuthButton";
-import axios from "axios";
 import { login } from "../utils/request";
+import { useNavigate } from "react-router-dom";
+import "../css/LoginPage.css"; // CSS 파일을 임포트
+import GoogleOAuthButton from "../components/oauthButton/GoogleOAuthButton";
+import NaverOAuthButton from "../components/oauthButton/NaverOAuthButton";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLoginClick = async () => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
+
     try {
-      const data = await login(username, password); // login API 호출
-      console.log("로그인 성공:", data);
-      navigate("/"); // 루트 경로로 리다이렉트
+      const response = await login(formData.username, formData.password);
+      alert("로그인 성공");
+      setFormData({ username: "", password: "" }); // 폼 초기화
+      navigate("/");
     } catch (error) {
-      setErrorMessage(error.message);
-      alert(error.message);
+      setErrorMessage(
+        error.response?.data?.message ||
+          "로그인에 실패했습니다. 다시 시도해 주세요."
+      );
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/signUp");
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        {/* TopBar 부분 */}
-        <div className="top-bar">
-          <span className="top-bar-text">LoginPage</span>
-        </div>
-
-        {/* username 필드 */}
-        <div className="form-field">
+        <div className="top-bar">LoginPage</div>
+        <form className="login-form" onSubmit={handleSubmit}>
           <label>Username</label>
           <input
-            id="username"
             type="text"
-            value={username}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            autocomplete="off"
+            required
             placeholder="Enter your username"
-            onChange={(e) => setUsername(e.target.value)}
           />
-        </div>
 
-        {/* password 필드 */}
-        <div className="form-field">
           <label>Password</label>
           <input
-            id="password"
             type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
             placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
-        <div className="oAuth-field">
-          <GoogleOAuthButton />
-        </div>
-        <div className="oAuth-field">
-          <NaverOAuthButton />
-        </div>
-        {/* 로그인, 회원가입 버튼 */}
-        <div className="action-buttons">
-          <button className="action-button signup-button">회원가입</button>
-          <button
-            className="action-button login-button"
-            onClick={handleLoginClick}
-          >
-            로그인
+
+          <button className="login-button" type="submit" disabled={loading}>
+            {loading ? "Signing in..." : "Sign In"}
           </button>
-        </div>
+          <GoogleOAuthButton />
+          <NaverOAuthButton />
+          <button
+            type="button"
+            className="signUp-button"
+            onClick={handleSignUpClick}
+          >
+            Sign Up
+          </button>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+        </form>
       </div>
     </div>
   );
